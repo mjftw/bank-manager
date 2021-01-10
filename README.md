@@ -2,10 +2,11 @@
 
 Simple bank account manager.
 
-Designed to demonstrate the idea of event sourcing, where the current state is
-not explicitly saved, all transactions that modify the state are.
+Designed to demonstrate the idea of [event sourcing](https://docs.microsoft.com/en-us/azure/architecture/patterns/event-sourcing), where the current state is not explicitly saved,
+but all transactions that modify the state are.
 Following this method the current state can be computed by performing a reduction
 over all the transactions.
+
 
 This idea maps nicely to a bank that makes transactions between accounts, so this
 is the example I've implemented.
