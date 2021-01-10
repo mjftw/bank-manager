@@ -45,6 +45,8 @@ defmodule Bank.Core do
 
   @spec add_transaction(Bank.Account, Bank.Transaction) :: Bank.Account
   defp add_transaction(account, transaction) do
+    # New transactions are stored at the start of the list rather than the end
+    # as this is much more efficient.
     Map.update(
       account,
       :transactions,
