@@ -2,7 +2,6 @@ defmodule Bank.Transaction do
   @enforce_keys [:amount, :account_num, :datetime]
   defstruct amount: nil, account_num: nil, datetime: nil
 
-  @spec new(any, any, any) :: %Bank.Transaction{account_num: any, amount: any, datetime: any}
   @doc """
   Create a new transaction
   """

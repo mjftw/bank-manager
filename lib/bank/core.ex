@@ -2,8 +2,6 @@ defmodule Bank.Core do
   def transfer(from, to, 0), do: {:ok, {from, to}}
   def transfer(from, to, _) when from == to, do: {:error, "Cannot transfer to the same account"}
 
-  @spec transfer(Bank.Account, Bank.Account, integer) ::
-          {:ok, {Bank.Account, Bank.Account}} | {:error, String.t()}
   def transfer(from_account, to_account, amount) do
     case balance(from_account) >= amount do
       false ->
@@ -30,7 +28,6 @@ defmodule Bank.Core do
     end
   end
 
-  @spec balance(Bank.Account) :: integer
   def balance(account) do
     case Enum.empty?(account.transactions) do
       true ->
@@ -46,7 +43,6 @@ defmodule Bank.Core do
     end
   end
 
-  @spec add_transaction(Bank.Account, Bank.Transaction) :: Bank.Account
   defp add_transaction(account, transaction) do
     # New transactions are stored at the start of the list rather than the end
     # as this is much more efficient.
