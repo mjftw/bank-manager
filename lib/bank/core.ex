@@ -1,4 +1,7 @@
 defmodule Bank.Core do
+  def transfer(from, to, 0), do: {:ok, {from, to}}
+  def transfer(from, to, _) when from == to, do: {:error, "Cannot transfer to the same account"}
+
   @spec transfer(Bank.Account, Bank.Account, integer) ::
           {:ok, {Bank.Account, Bank.Account}} | {:error, String.t()}
   def transfer(from_account, to_account, amount) do

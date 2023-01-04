@@ -42,11 +42,31 @@ defmodule BankTest do
       assert from_transaction.amount == -to_transaction.amount
     end
 
+    test "should do nothing when transferring zero balance" do
+      from = %Account{account_num: 321, initial_balance: 100}
+      to = %Account{account_num: 123, initial_balance: 100}
+
+      {:ok, {new_from, new_to}} = Bank.Core.transfer(from, to, 0)
+
+      assert new_from == from
+      assert new_to == to
+    end
+
     test "should give error when from account balance too low" do
       from = %Account{account_num: 321, initial_balance: 100}
       to = %Account{account_num: 123, initial_balance: 100}
 
-      {:error, _} = Bank.Core.transfer(from, to, 101)
+      assert {:error, message} = Bank.Core.transfer(from, to, 101)
+
+      assert message == "Payee balance too low"
+    end
+
+    test "should give an error when transferring to the same account" do
+      account = %Account{account_num: 321, initial_balance: 100}
+
+      assert {:error, message} = Bank.Core.transfer(account, account, 200)
+
+      assert message == "Cannot transfer to the same account"
     end
   end
 end
