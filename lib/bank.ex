@@ -1,4 +1,5 @@
 defmodule Bank do
+  alias Bank.Transaction
   def transfer(from, to, 0), do: {:ok, {from, to}}
   def transfer(from, to, _) when from == to, do: {:error, "Cannot transfer to the same account"}
 
@@ -39,6 +40,16 @@ defmodule Bank do
 
         account.initial_balance + transactions_sum
     end
+  end
+
+  @doc """
+    Count the number of transactions on the account
+
+    iex> Bank.num_transactions(Bank.Account.new(111_222_333))
+    0
+  """
+  def num_transactions(account) do
+    Enum.count(account.transactions)
   end
 
   defp add_transaction(account, transaction) do

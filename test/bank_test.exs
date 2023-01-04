@@ -4,6 +4,8 @@ defmodule BankTest do
   alias Bank.Account
   alias Bank.Transaction
 
+  doctest Bank
+
   setup do
     %{now: DateTime.now!("Etc/UTC")}
   end
