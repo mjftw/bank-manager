@@ -12,7 +12,7 @@ defmodule BankTest do
     test "should give correct balance when no transactions" do
       account = %Account{account_num: 123, initial_balance: 100}
 
-      assert Bank.Core.balance(account) == 100
+      assert Bank.balance(account) == 100
     end
 
     test "should give correct balance with transactions", %{now: now} do
@@ -26,7 +26,7 @@ defmodule BankTest do
         ]
       }
 
-      assert Bank.Core.balance(account) == 100 + 10 + 75 - 15
+      assert Bank.balance(account) == 100 + 10 + 75 - 15
     end
   end
 
@@ -35,7 +35,7 @@ defmodule BankTest do
       from = %Account{account_num: 321, initial_balance: 100}
       to = %Account{account_num: 123, initial_balance: 100}
 
-      {:ok, {new_from, new_to}} = Bank.Core.transfer(from, to, 10)
+      {:ok, {new_from, new_to}} = Bank.transfer(from, to, 10)
       [from_transaction | _] = new_from.transactions
       [to_transaction | _] = new_to.transactions
 
@@ -46,7 +46,7 @@ defmodule BankTest do
       from = %Account{account_num: 321, initial_balance: 100}
       to = %Account{account_num: 123, initial_balance: 100}
 
-      {:ok, {new_from, new_to}} = Bank.Core.transfer(from, to, 0)
+      {:ok, {new_from, new_to}} = Bank.transfer(from, to, 0)
 
       assert new_from == from
       assert new_to == to
@@ -56,7 +56,7 @@ defmodule BankTest do
       from = %Account{account_num: 321, initial_balance: 100}
       to = %Account{account_num: 123, initial_balance: 100}
 
-      assert {:error, message} = Bank.Core.transfer(from, to, 101)
+      assert {:error, message} = Bank.transfer(from, to, 101)
 
       assert message == "Payee balance too low"
     end
@@ -64,7 +64,7 @@ defmodule BankTest do
     test "should give an error when transferring to the same account" do
       account = %Account{account_num: 321, initial_balance: 100}
 
-      assert {:error, message} = Bank.Core.transfer(account, account, 200)
+      assert {:error, message} = Bank.transfer(account, account, 200)
 
       assert message == "Cannot transfer to the same account"
     end
