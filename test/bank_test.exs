@@ -1,6 +1,10 @@
 defmodule BankTest do
   use ExUnit.Case
 
+  setup do
+    %{now: DateTime.now("Etc/UTC")}
+  end
+
   describe "balance/1" do
     test "should give correct balance when no transactions" do
       account = %Bank.Account{account_num: 123, initial_balance: 100}
@@ -8,14 +12,14 @@ defmodule BankTest do
       assert Bank.Core.balance(account) == 100
     end
 
-    test "should give correct balance with transactions" do
+    test "should give correct balance with transactions", %{now: now} do
       account = %Bank.Account{
-        account_num: 321,
+        account_num: 123,
         initial_balance: 100,
         transactions: [
-          %Bank.Transaction{amount: 10, account_num: 123, datetime: ""},
-          %Bank.Transaction{amount: 75, account_num: 123, datetime: ""},
-          %Bank.Transaction{amount: -15, account_num: 123, datetime: ""}
+          %Bank.Transaction{amount: 10, account_num: 321, datetime: now},
+          %Bank.Transaction{amount: 75, account_num: 321, datetime: now},
+          %Bank.Transaction{amount: -15, account_num: 321, datetime: now}
         ]
       }
 
