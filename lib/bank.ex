@@ -3,28 +3,26 @@ defmodule Bank do
   def transfer(from, to, _) when from == to, do: {:error, "Cannot transfer to the same account"}
 
   def transfer(from_account, to_account, amount) do
-    case balance(from_account) >= amount do
-      false ->
-        {:error, "Payee balance too low"}
+    if balance(from_account) >= amount do
+      {:ok, now} = DateTime.now("Etc/UTC")
 
-      true ->
-        {:ok, now} = DateTime.now("Etc/UTC")
+      debited_from =
+        add_transaction(from_account, %Bank.Transaction{
+          amount: -amount,
+          account_num: to_account.account_num,
+          datetime: now
+        })
 
-        debited_from =
-          add_transaction(from_account, %Bank.Transaction{
-            amount: -amount,
-            account_num: to_account.account_num,
-            datetime: now
-          })
+      credited_to =
+        add_transaction(to_account, %Bank.Transaction{
+          amount: amount,
+          account_num: from_account.account_num,
+          datetime: now
+        })
 
-        credited_to =
-          add_transaction(to_account, %Bank.Transaction{
-            amount: amount,
-            account_num: from_account.account_num,
-            datetime: now
-          })
-
-        {:ok, {debited_from, credited_to}}
+      {:ok, {debited_from, credited_to}}
+    else
+      {:error, "Payee balance too low"}
     end
   end
 
