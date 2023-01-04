@@ -5,7 +5,7 @@ defmodule BankTest do
   alias Bank.Transaction
 
   setup do
-    %{now: DateTime.now("Etc/UTC")}
+    %{now: DateTime.now!("Etc/UTC")}
   end
 
   describe "balance/1" do
