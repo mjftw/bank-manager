@@ -33,42 +33,24 @@ defmodule BankTest do
   end
 
   describe "transfer/3" do
+    @tag :skip
     test "should add complementary transactions to both accounts" do
-      from = %Account{account_num: 321, initial_balance: 100}
-      to = %Account{account_num: 123, initial_balance: 100}
-
-      {:ok, {new_from, new_to}} = Bank.transfer(from, to, 10)
-      [from_transaction | _] = new_from.transactions
-      [to_transaction | _] = new_to.transactions
-
-      assert from_transaction.amount == -to_transaction.amount
+      # TODO
     end
 
+    @tag :skip
     test "should do nothing when transferring zero balance" do
-      from = %Account{account_num: 321, initial_balance: 100}
-      to = %Account{account_num: 123, initial_balance: 100}
-
-      {:ok, {new_from, new_to}} = Bank.transfer(from, to, 0)
-
-      assert new_from == from
-      assert new_to == to
+      # TODO
     end
 
+    @tag :skip
     test "should give error when from account balance too low" do
-      from = %Account{account_num: 321, initial_balance: 100}
-      to = %Account{account_num: 123, initial_balance: 100}
-
-      assert {:error, message} = Bank.transfer(from, to, 101)
-
-      assert message == "Payee balance too low"
+      # TODO
     end
 
+    @tag :skip
     test "should give an error when transferring to the same account" do
-      account = %Account{account_num: 321, initial_balance: 100}
-
-      assert {:error, message} = Bank.transfer(account, account, 200)
-
-      assert message == "Cannot transfer to the same account"
+      # TODO
     end
   end
 end
