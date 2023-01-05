@@ -1,14 +1,17 @@
 defmodule Bank do
-  alias Bank.Transaction
   def transfer(from, to, 0), do: {:ok, {from, to}}
-  def transfer(from, to, _) when from == to, do: {:error, "Cannot transfer to the same account"}
+
+  def transfer(from, to, _) when from == to do
+    {:error, "Cannot transfer to the same account"}
+  end
 
   def transfer(from_account, to_account, amount) do
     if balance(from_account) >= amount do
       {:ok, now} = DateTime.now("Etc/UTC")
 
       debited_from =
-        add_transaction(from_account, %Bank.Transaction{
+        from_account
+        |> add_transaction(%Bank.Transaction{
           amount: -amount,
           account_num: to_account.account_num,
           datetime: now

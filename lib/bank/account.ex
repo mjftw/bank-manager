@@ -9,7 +9,7 @@ defmodule Bank.Account do
   @doc """
   Create a new bank account
   """
-  def new(account_num), do: new(account_num, 0)
+  def new(account_num), do: new(account_num, 1)
 
   def new(_, balance) when not is_number(balance) do
     raise("Balance must be a number")

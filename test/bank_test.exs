@@ -12,7 +12,7 @@ defmodule BankTest do
 
   describe "balance/1" do
     test "should give correct balance when no transactions" do
-      account = %Account{account_num: 123, initial_balance: 100}
+      account = %Account{account_num: 123, initial_balance: 100, transactions: []}
 
       assert Bank.balance(account) == 100
     end
